@@ -12,7 +12,6 @@ const UseAsync = () => {
       <CodeExample codeString={codeExample}>
         <WorkingExample />
       </CodeExample>
-      <h3>Properties</h3>
       <ComponentProperties />
     </>
   );

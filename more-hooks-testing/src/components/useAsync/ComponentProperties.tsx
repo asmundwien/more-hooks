@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 const ComponentProperties = () => {
   return (
     <>
-      <h4>Input arguments</h4>
+      <h3>Input arguments</h3>
       <Table bordered>
         <thead>
           <tr>
@@ -22,7 +22,7 @@ const ComponentProperties = () => {
           </tr>
         </tbody>
       </Table>
-      <h4>Response properties</h4>
+      <h3>Response properties</h3>
       <Table bordered>
         <thead>
           <tr>
@@ -66,7 +66,7 @@ const ComponentProperties = () => {
             <td>
               <code>unknown</code>
             </td>
-            <td>What ever exception the asynchronous call may have thrown.</td>
+            <td>Whatever exception the asynchronous call may have thrown.</td>
           </tr>
           <tr>
             <td>success</td>

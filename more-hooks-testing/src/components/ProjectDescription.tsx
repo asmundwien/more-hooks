@@ -10,7 +10,7 @@ const Navbar = () => {
       </p>
       <p>
         We take no credits for these components as they are merely a collection
-        of great ideas shared accross the community. Thanks for being great.
+        of ideas shared accross the community. Thanks for being great!
       </p>
       <p>This library is written with full TypeScript support.</p>
       <hr />

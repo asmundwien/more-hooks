@@ -20,9 +20,19 @@ const ComponentProperties = () => {
             </td>
             <td>The method that this hook will call.</td>
           </tr>
+          <tr>
+            <td>2</td>
+            <td>
+              <code>UseAsyncOptions</code>
+            </td>
+            <td>Options object. See table below.</td>
+          </tr>
         </tbody>
       </Table>
-      <h3>Response properties</h3>
+      <h3>Types</h3>
+      <h4>
+        <code>UseAsyncResponse</code>
+      </h4>
       <Table bordered>
         <thead>
           <tr>
@@ -40,13 +50,13 @@ const ComponentProperties = () => {
             <td>Whether or not the asynchronous call is currently pending.</td>
           </tr>
           <tr>
-            <td>data</td>
+            <td>response</td>
             <td>
               <code>T</code>
             </td>
             <td>
-              The response data from the asynchronous call. <code>T</code> is
-              the same response type as the asynchronos method the hook was
+              The response from the asynchronous call. <code>T</code> is the
+              same response type as the asynchronos method the hook was
               initialized with.
             </td>
           </tr>
@@ -86,6 +96,41 @@ const ComponentProperties = () => {
             <td>
               Defaults to <code>false</code>. Will remain <code>true</code> once
               the asynchronous call has been made at at least once.
+            </td>
+          </tr>
+        </tbody>
+      </Table>
+      <h4>
+        <code>UseAsyncOptions</code>
+      </h4>
+      <Table bordered>
+        <thead>
+          <tr>
+            <th>name</th>
+            <th>type</th>
+            <th>description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>immediate</td>
+            <td>
+              <code>boolean</code>
+            </td>
+            <td>
+              Whether or not to call the hook immediately when the component
+              renders.
+            </td>
+          </tr>
+          <tr>
+            <td>response</td>
+            <td>
+              <code>tuple</code>
+            </td>
+            <td>
+              This object can only exist and is required if{" "}
+              <code>immediate</code> is <code>true</code>. Expects a list with
+              the same parameters as the call-method.
             </td>
           </tr>
         </tbody>

@@ -6,21 +6,29 @@ We take no credits for these components as they are merely a collection of ideas
 
 This library is written with full **TypeScript** support.
 
+## Table of content
+- [ useAsync ](#useAsync)
+- [ useOnMount ](#useOnMount)
+
+
 ## useAsync
+<a name="useAsync"></a>
 
 This hook is designed to simplify the handling of a asynchronous calls.
 
 ### Example
 
 ```js
+import { useAsync } from "@asmundwien/more-hooks";
+
 const App = () => {
-  const { pending, error, data, call } = useAsync(someAsyncFunc);
+  const { pending, error, response, call } = useAsync(someAsyncFunc);
   return (
     <>
       {pending && <LoadingSpinner />}
       {error && <MyError error={error} />}
-      {data && <MyData data={data} />}
-      <Button onClick={() => call()}>Get data</Button>
+      {response && <MyData data={response} />}
+      <Button onClick={() => call()}>Fetch something</Button>
     </>
   );
 };
@@ -28,17 +36,63 @@ const App = () => {
 
 ### Input arguments
 
-| #   | type             | description                         |
-| --- | ---------------- | ----------------------------------- |
-| 1   | `async Function` | The method that this hook will call |
+| #   | type              | description                         |
+| --- | ----------------- | ----------------------------------- |
+| 1   | `async Function`  | The method that this hook will call |
+| 2   | `UseAsyncOptions` | Options object. See table below.    |
 
-### Response properties
+### Types
+
+#### `UseAsyncResponse`
 
 | name          | type             | description                                                                                                                                       |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | pending       | `boolean`        | Whether or not the asynchronous call is currently pending.                                                                                        |
-| data          | `T`              | The response data from the asynchronous call. `T` is the same response type as the asynchronos method the hook was initialized with.              |
+| response      | `T`              | The response from the asynchronous call. `T` is the same response type as the asynchronos method the hook was initialized with.                   |
 | call          | `async Function` | Will initialize a call to the method that the hook was initialized with. Will expect the same input parameters as the original method definition. |
 | error         | `unknown`        | Whatever exception the asynchronous call may have thrown.                                                                                         |
 | success       | `boolean`        | Whether or not the asynchronous call was completed without catching any errors.                                                                   |
 | hasBeenCalled | `boolean`        | Defaults to `false`. Will remain `true` once the asynchronous call has been made at at least once.                                                |
+
+#### `UseAsyncOptions`
+
+Object containing optional pramaters.
+| name | type | description |
+| ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| immediate | `boolean` | Whether or not to call the hook immediately when the component renders. |
+| immediateParams | `tuple` | This object can only exist and is required if `immediate` is `true`. Expects a list with the same parameters as the call-method. |
+
+## useOnMount
+<a name="useOnMount"></a>
+
+This tiny hook will run only during your components first render lifecycle. Remeber `componentDidMount()`?.
+
+### Example
+
+```js
+import { useOnMount } from "@asmundwien/more-hooks";
+
+const Component = () => {
+  const [text, setText] = useState("");
+
+  const fetch = async () => {
+    const response = await myApi();
+    setText(response);
+  };
+
+  useOnMount(fetch);
+
+  return (
+    <>
+      {text && <p>Response text: {text}</p>}
+      {!text && <Alert>Just mounted anew, hang on...</Alert>}
+    </>
+  );
+};
+```
+
+### Input arguments
+
+| #   | type       | description                                           |
+| --- | ---------- | ----------------------------------------------------- |
+| 1   | `Function` | Method that will be called when the component mounts. |

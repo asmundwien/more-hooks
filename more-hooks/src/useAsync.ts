@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import useOnMount from "./useOnMount";
 
 /**
  * A hook designed to simplify the handling of a asynchronous calls.
@@ -11,32 +12,50 @@ import { useCallback, useState } from "react";
  *
  * @example
  * const Component = () => {
- *   const { data, pending, success, error, call } = useAsync(fetchResource);
+ *   const { response, pending, success, error, call } = useAsync(fetchResource);
  *   return (
  *     <>
  *       {pending && <LoadingSpinner />}
  *       {error && <MyError error={error} />}
  *       {success && <SuccessMessage />}
- *       {!pending && data && <MyData data={data} />}
+ *       {!pending && response && <MyData data={response} />}
  *       <Button onClick={() => call()}>Fetch resource</Button>
  *     </>
  *   );
  * };
  */
 
-interface UseAsyncResponse<R, P extends unknown[]> {
-  data: R | undefined;
+export type UseAsyncResponse<R, A extends unknown[]> = {
+  response: R | undefined;
   pending: boolean;
   success: boolean;
   error: unknown | null;
   hasBeenCalled: boolean;
-  call: (...args: P) => Promise<R | undefined>;
-}
+  call: UseAsyncMethod<R | undefined, A>;
+};
 
-const useAsync = <R, A extends unknown[] = []>(
-  method: (...args: A) => Promise<R>
+export type UseAsyncMethod<R, A extends unknown[]> = {
+  (...args: A): Promise<R>;
+};
+
+export type UseAsyncOptions<A extends unknown[]> =
+  | ImmediateSet<A>
+  | ImmediateNotSet;
+
+type ImmediateSet<A extends unknown[]> = {
+  immediate: true;
+  immediateParams: A;
+};
+
+type ImmediateNotSet = {
+  immediate: undefined | false;
+};
+
+const useAsync = <R, A extends unknown[]>(
+  method: UseAsyncMethod<R, A>,
+  options?: UseAsyncOptions<A>
 ): UseAsyncResponse<R, A> => {
-  const [data, setData] = useState<R>();
+  const [response, setResponse] = useState<R>();
   const [pending, setPending] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
   const [error, setError] = useState<unknown | null>(null);
@@ -46,22 +65,28 @@ const useAsync = <R, A extends unknown[] = []>(
     setHasBeenCalled(true);
     setPending(true);
     setSuccess(false);
-    setData(undefined);
+    setResponse(undefined);
     setError(null);
 
     try {
       const response = await method(...args);
-      setData(response);
+      setResponse(response);
       setSuccess(true);
     } catch (error) {
       setError(error);
     } finally {
       setPending(false);
-      return data;
+      return response;
     }
   }, []);
 
-  return { data, pending, success, error, call, hasBeenCalled };
+  useOnMount(() => {
+    if (options?.immediate) {
+      call(...options?.immediateParams);
+    }
+  });
+
+  return { response, pending, success, error, call, hasBeenCalled };
 };
 
 export default useAsync;

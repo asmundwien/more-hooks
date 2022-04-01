@@ -10,7 +10,7 @@ describe("useAsync", () => {
     expect.assertions(9);
     const { result } = renderHook(() => useAsync(async () => {}));
 
-    expect(result.current.data).toBeUndefined();
+    expect(result.current.response).toBeUndefined();
     expect(result.current.error).toBeNull();
 
     expect(result.current.pending).toBe(false);
@@ -34,7 +34,7 @@ describe("useAsync", () => {
       await result.current.call();
     });
 
-    expect(result.current.data).toStrictEqual(expectedData);
+    expect(result.current.response).toStrictEqual(expectedData);
     expect(result.current.error).toBeNull();
 
     expect(result.current.pending).toBe(false);
@@ -54,7 +54,7 @@ describe("useAsync", () => {
       await result.current.call();
     });
 
-    expect(result.current.data).toBeUndefined();
+    expect(result.current.response).toBeUndefined();
     expect(result.current.error).toBe(expectedError);
 
     expect(result.current.pending).toBe(false);
@@ -64,7 +64,7 @@ describe("useAsync", () => {
     expect(method).toHaveBeenCalledTimes(1);
   });
 
-  it("updates data after second call", async () => {
+  it("updates response after second call", async () => {
     expect.assertions(3);
     const firstExpectedData = { testData: "first" };
     const secondExpectedData = { testData: "second" };
@@ -77,14 +77,14 @@ describe("useAsync", () => {
       await result.current.call();
     });
 
-    expect(result.current.data).toStrictEqual(firstExpectedData);
+    expect(result.current.response).toStrictEqual(firstExpectedData);
 
     method.mockReturnValue(secondExpectedData);
     await act(async () => {
       await result.current.call();
     });
 
-    expect(result.current.data).toStrictEqual(secondExpectedData);
+    expect(result.current.response).toStrictEqual(secondExpectedData);
     expect(method).toHaveBeenCalledTimes(2);
   });
 });

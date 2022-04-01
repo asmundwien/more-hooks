@@ -8,7 +8,7 @@ const fetchText = async (error: boolean = false): Promise<string> => {
 };
 
 const WorkingExample = () => {
-  const { data, pending, success, hasBeenCalled, error, call } =
+  const { response, pending, success, hasBeenCalled, error, call } =
     useAsync(fetchText);
   return (
     <>
@@ -25,7 +25,7 @@ const WorkingExample = () => {
         className="align-items-center justify-content-center mb-2"
       >
         {pending && <Spinner animation="border" variant="primary" />}
-        {!pending && success && <p>Response text: {data}</p>}
+        {!pending && success && <p>Response text: {response}</p>}
       </Row>
 
       <Row xs={"auto"}>

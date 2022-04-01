@@ -13,7 +13,6 @@ const Navbar = () => {
         of ideas shared accross the community. Thanks for being great!
       </p>
       <p>This library is written with full TypeScript support.</p>
-      <hr />
     </>
   );
 };

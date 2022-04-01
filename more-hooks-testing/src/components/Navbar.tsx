@@ -9,6 +9,7 @@ const Navbar = () => {
         <N.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="#useAsync">useAsync</Nav.Link>
+            <Nav.Link href="#useOnMount">useOnMount</Nav.Link>
           </Nav>
         </N.Collapse>
       </Container>

@@ -14,11 +14,18 @@ const ComponentProperties = () => {
         </thead>
         <tbody>
           <tr>
-            <td>1</td>
+            <td>rest</td>
             <td>
               <code>Function</code>
             </td>
-            <td>Method that will be called when the component mounts.</td>
+            <td>
+              Methods that will be called when the component mounts. Because it
+              is a{" "}
+              <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters">
+                rest parameter
+              </a>{" "}
+              any number of methods can be passed.
+            </td>
           </tr>
         </tbody>
       </Table>

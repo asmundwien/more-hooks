@@ -8,6 +8,7 @@ const ComponentProperties = () => {
         <thead>
           <tr>
             <th>#</th>
+            <th>required</th>
             <th>type</th>
             <th>description</th>
           </tr>
@@ -15,6 +16,7 @@ const ComponentProperties = () => {
         <tbody>
           <tr>
             <td>1</td>
+            <td>true</td>
             <td>
               <code>async Function</code>
             </td>
@@ -22,6 +24,7 @@ const ComponentProperties = () => {
           </tr>
           <tr>
             <td>2</td>
+            <td>false</td>
             <td>
               <code>UseAsyncOptions</code>
             </td>

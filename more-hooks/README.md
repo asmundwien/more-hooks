@@ -7,11 +7,12 @@ We take no credits for these components as they are merely a collection of ideas
 This library is written with full **TypeScript** support.
 
 ## Table of content
+
 - [ useAsync ](#useAsync)
 - [ useOnMount ](#useOnMount)
 
-
 ## useAsync
+
 <a name="useAsync"></a>
 
 This hook is designed to simplify the handling of a asynchronous calls.
@@ -36,10 +37,10 @@ const App = () => {
 
 ### Input arguments
 
-| #   | type              | description                         |
-| --- | ----------------- | ----------------------------------- |
-| 1   | `async Function`  | The method that this hook will call |
-| 2   | `UseAsyncOptions` | Options object. See table below.    |
+| #   | required | type              | description                                                 |
+| --- | -------- | ----------------- | ----------------------------------------------------------- |
+| 1   | true     | `async Function`  | The method that this hook will call                         |
+| 2   | false    | `UseAsyncOptions` | Options object. See documentation on UseAsyncOptions below. |
 
 ### Types
 
@@ -63,6 +64,7 @@ Object containing optional pramaters.
 | immediateParams | `tuple` | This object can only exist and is required if `immediate` is `true`. Expects a list with the same parameters as the call-method. |
 
 ## useOnMount
+
 <a name="useOnMount"></a>
 
 This tiny hook will run only during your components first render lifecycle. Remeber `componentDidMount()`?.
@@ -93,6 +95,6 @@ const Component = () => {
 
 ### Input arguments
 
-| #   | type       | description                                           |
-| --- | ---------- | ----------------------------------------------------- |
-| 1   | `Function` | Method that will be called when the component mounts. |
+| #    | type       | description                                                                                                                                                                                                               |
+| ---- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| rest | `Function` | Methods that will be called when the component mounts. Because it is a [rest parameter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters) any number of methods can be passed. |

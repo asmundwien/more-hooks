@@ -1,6 +1,6 @@
 {
   "name": "@asmundwien/more-hooks",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A collection of usefull hooks that are commonly used in React development. All credits to the great community for coming up with and sharing these ideas with the world.",
   "author": "asmundwien",
   "license": "Apache-2.0",

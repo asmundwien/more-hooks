@@ -1,7 +1,8 @@
 /**
  * A tiny hook that runs only during your components first render lifecycle. Remeber onComponentDidMount?.
  *
- * @param    {Function} method
+ * @param    {Function} methods
+ *           this rest parameter can take any amount of input methods
  *
  * @return   {void}
  *
@@ -24,5 +25,5 @@
  *   );
  * };
  */
-declare const useOnMount: (method: () => {}) => void;
+declare const useOnMount: (...methods: (() => unknown)[]) => void;
 export default useOnMount;

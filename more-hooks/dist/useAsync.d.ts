@@ -3,6 +3,8 @@
  *
  * @param    {() => Promise<T>} method
  *           the asynchronous method that this hook will call
+ 
+ * @param    {UseAsyncOptions | undefined} options
  *
  * @return   {Object}
  *           response data, status information and callback method

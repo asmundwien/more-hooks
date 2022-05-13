@@ -29,18 +29,13 @@ export declare type UseAsyncResponse<R, A extends unknown[]> = {
     success: boolean;
     error: unknown | null;
     hasBeenCalled: boolean;
-    call: UseAsyncMethod<R | undefined, A>;
+    call: UseAsyncMethod<R, A>;
 };
 export declare type UseAsyncMethod<R, A extends unknown[]> = {
     (...args: A): Promise<R>;
 };
-export declare type UseAsyncOptions<A extends unknown[]> = ImmediateSet<A> | ImmediateNotSet;
-declare type ImmediateSet<A extends unknown[]> = {
-    immediate: true;
-    immediateParams: A;
+export declare type UseAsyncOptions<A extends unknown[]> = {
+    immediate: A;
 };
-declare type ImmediateNotSet = {
-    immediate: undefined | false;
-};
-declare const useAsync: <R, A extends unknown[]>(method: UseAsyncMethod<R, A>, options?: ImmediateNotSet | ImmediateSet<A> | undefined) => UseAsyncResponse<R, A>;
+declare const useAsync: <R, A extends unknown[]>(method: UseAsyncMethod<R, A>, options?: UseAsyncOptions<A> | undefined) => UseAsyncResponse<R, A>;
 export default useAsync;

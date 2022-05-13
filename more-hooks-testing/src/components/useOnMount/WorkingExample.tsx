@@ -20,7 +20,7 @@ const WorkingExample = () => {
   return (
     <>
       {text && <p>Response text: {text}</p>}
-      {!text && <Alert variant="light">Just mounted anew, hang on...</Alert>}
+      {!text && <Alert variant="light">Fetching data, hang on...</Alert>}
     </>
   );
 };
@@ -29,13 +29,24 @@ const Wrapper = () => {
   const [mounted, setMounted] = useState(false);
   return (
     <>
-      {mounted && <Alert variant="info">Mounted</Alert>}
-      {!mounted && <Alert variant="danger">Not mounted</Alert>}
+      {mounted && (
+        <Alert variant="info">
+          Component has been mounted. Watch to see what happens when the
+          lifecycle starts.
+        </Alert>
+      )}
+      {!mounted && (
+        <Alert variant="danger">
+          Component is unmounted. Click below to mount anew.
+        </Alert>
+      )}
       {mounted && <WorkingExample />}
 
       <Row xs={"auto"}>
         <Col>
-          <Button onClick={() => setMounted(!mounted)}>Toggle mount</Button>
+          <Button onClick={() => setMounted(!mounted)}>
+            {mounted ? "Unmount" : "Mount"} component
+          </Button>
         </Col>
       </Row>
     </>

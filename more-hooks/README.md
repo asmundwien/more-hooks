@@ -10,6 +10,7 @@ This library is written with full **TypeScript** support.
 
 - [ useAsync ](#useAsync)
 - [ useOnMount ](#useOnMount)
+- [ createDefinedContext ](#createDefinedContext)
 
 ## useAsync
 
@@ -60,8 +61,7 @@ const App = () => {
 Object containing optional pramaters.
 | name | type | description |
 | ------------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| immediate | `boolean` | Whether or not to call the hook immediately when the component renders. |
-| immediateParams | `tuple` | This object can only exist and is required if `immediate` is `true`. Expects a list with the same parameters as the call-method. |
+| immediate | `tuple` | A list with the same parameters as the call-method. Will initialize a call when the component mounts. |
 
 ## useOnMount
 
@@ -98,3 +98,62 @@ const Component = () => {
 | #    | type       | description                                                                                                                                                                                                               |
 | ---- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | rest | `Function` | Methods that will be called when the component mounts. Because it is a [rest parameter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters) any number of methods can be passed. |
+
+## createDefinedContext
+
+<a name="createDefinedContext"></a>
+
+An implementation on top of React Context. It ensures the existance of your ContextProvider and its value. The content of your context can therefore never be undefined.
+
+### Example
+
+```js
+import { createDefinedContext, useOnMount } from "@asmundwien/more-hooks";
+
+export const [useUserContext, UserProvider] = createDefinedContext<User>();
+
+const UserContext = ({ children }: Props) => {
+  const [user, setUser] = useState<User>();
+  useOnMount(() => getUser().then(setUser));
+
+  if (!user) {
+    return <Loading />;
+  }
+
+  return <UserProvider value={user}>{children}</UserProvider>;
+};
+```
+
+1. Create a new defined context.
+1. Get your data from somewhere, then feed it to your provider. In this example it calls for an async user object.
+
+```js
+import { UserContext, UserDetails } from ".";
+
+const App = () => (
+  <UserContext>
+    <UserDetails />
+  </UserContext>
+);
+```
+
+Any children of your context will have access to the data in the context provider.
+
+```js
+import { useUserContext } from "UserContext";
+
+const UserDetails = () => {
+  const { name } = useUserContext();
+  return <p>User name: {name}</p>;
+};
+```
+
+Finally, access the hook from your DefinedContext.
+
+### Input
+
+In a TypeScript-project, a Type-definition is required.
+
+### Return
+
+Returns a tuple containing a hook to access your data, and the React Context Provider needed to initialize the context.

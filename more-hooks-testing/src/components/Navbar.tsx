@@ -10,6 +10,7 @@ const Navbar = () => {
           <Nav className="me-auto">
             <Nav.Link href="#useAsync">useAsync</Nav.Link>
             <Nav.Link href="#useOnMount">useOnMount</Nav.Link>
+            <Nav.Link href="#createDefinedContext">createDefinedContext</Nav.Link>
           </Nav>
         </N.Collapse>
       </Container>

@@ -51,7 +51,9 @@ describe("useAsync", () => {
     const { result } = renderHook(() => useAsync(method));
 
     await act(async () => {
-      await result.current.call();
+      try {
+        await result.current.call();
+      } catch {}
     });
 
     expect(result.current.response).toBeUndefined();

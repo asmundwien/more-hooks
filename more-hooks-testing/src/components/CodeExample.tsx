@@ -4,7 +4,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 
 type Props = {
   codeString: string;
-  children: ReactNode;
+  children?: ReactNode;
 };
 
 const CodeExample = ({ codeString, children }: Props) => {
@@ -13,7 +13,7 @@ const CodeExample = ({ codeString, children }: Props) => {
       <SyntaxHighlighter className="mt-0 border-bottom" language="tsx">
         {codeString}
       </SyntaxHighlighter>
-      <Container className="p-3">{children}</Container>
+      {children && <Container className="p-3">{children}</Container>}
     </Card>
   );
 };

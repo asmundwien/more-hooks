@@ -13,7 +13,7 @@ The project in which the node module is developed, bundled and published to NPM.
 
 ### more-hooks-testing
 
-Documentation and implementation testing of `more-hooks`. The project implements the `more-hooks` package via symlinks.
+Documentation and integration testing of `more-hooks`. The project implements the `more-hooks` package via symlinks.
 
 #### Setup the test environment
 

@@ -33,25 +33,14 @@ export type UseAsyncResponse<R, A extends unknown[]> = {
   success: boolean;
   error: unknown | null;
   hasBeenCalled: boolean;
-  call: UseAsyncMethod<R | undefined, A>;
+  call: UseAsyncMethod<R, A>;
 };
 
 export type UseAsyncMethod<R, A extends unknown[]> = {
   (...args: A): Promise<R>;
 };
 
-export type UseAsyncOptions<A extends unknown[]> =
-  | ImmediateSet<A>
-  | ImmediateNotSet;
-
-type ImmediateSet<A extends unknown[]> = {
-  immediate: true;
-  immediateParams: A;
-};
-
-type ImmediateNotSet = {
-  immediate: undefined | false;
-};
+export type UseAsyncOptions<A extends unknown[]> = { immediate: A };
 
 const useAsync = <R, A extends unknown[]>(
   method: UseAsyncMethod<R, A>,
@@ -66,25 +55,25 @@ const useAsync = <R, A extends unknown[]>(
   const call = useCallback(async (...args: Parameters<typeof method>) => {
     setHasBeenCalled(true);
     setPending(true);
-    setSuccess(false);
-    setResponse(undefined);
     setError(null);
 
     try {
       const response = await method(...args);
       setResponse(response);
       setSuccess(true);
+      return response;
     } catch (error) {
       setError(error);
+      setSuccess(false);
+      throw error;
     } finally {
       setPending(false);
-      return response;
     }
   }, []);
 
   useOnMount(() => {
     if (options?.immediate) {
-      call(...options?.immediateParams);
+      call(...options?.immediate);
     }
   });
 
